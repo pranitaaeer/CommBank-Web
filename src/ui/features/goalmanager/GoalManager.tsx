@@ -15,7 +15,8 @@ import DatePicker from '../../components/DatePicker'
 import { Theme } from '../../components/Theme'
 
 type Props = { goal: Goal }
-  type EmojiPickerContainerProps = { isOpen: boolean; hasIcon: boolean }
+type GoalIconContainerProps = { shouldShow: boolean }
+type EmojiPickerContainerProps = { isOpen: boolean; hasIcon: boolean }
 export function GoalManager(props: Props) {
   const dispatch = useAppDispatch()
 
@@ -41,7 +42,16 @@ export function GoalManager(props: Props) {
   useEffect(() => {
     setName(goal.name)
   }, [goal.name])
+useEffect(() => {
+    setIcon(props.goal.icon)
+  }, [props.goal.id, props.goal.icon])
 
+  const hasIcon = () => icon != null
+
+  const addIconOnClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    setEmojiPickerIsOpen(true)
+  }
   const updateNameOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const nextName = event.target.value
     setName(nextName)
@@ -142,7 +152,17 @@ const pickEmojiOnClick = (
 >
   <EmojiPicker onClick={pickEmojiOnClick} />
 </EmojiPickerContainer>
-  
+    
+  <AddIconButtonContainer hasIcon={hasIcon()}>
+      <TransparentButton onClick={addIconOnClick}>
+        <FontAwesomeIcon icon={faSmile} size="2x" />
+        <AddIconButtonText>Add icon</AddIconButtonText>
+      </TransparentButton>
+    </AddIconButtonContainer>
+    
+  <GoalIconContainer shouldShow={hasIcon()}>
+      <GoalIcon icon={goal.icon} onClick={addIconOnClick} />
+    </GoalIconContainer>
   )
 }
 
@@ -224,3 +244,17 @@ const EmojiPickerContainer = styled.div<EmojiPickerContainerProps>`
   top: ${(props) => (props.hasIcon ? '10rem' : '2rem')};
   left: 0;
 `
+const Icon = styled.h1`
+  font-size: 6rem;
+  cursor: pointer;
+`
+const GoalIconContainer = styled.div<GoalIconContainerProps>`
+  display: ${(props) => (props.shouldShow ? 'flex' : 'none')};
+`
+export default function GoalIcon(props: Props) {
+  return (
+    <TransparentButton onClick={props.onClick}>
+      <Icon>{props.icon}</Icon>
+    </TransparentButton>
+  )
+}
