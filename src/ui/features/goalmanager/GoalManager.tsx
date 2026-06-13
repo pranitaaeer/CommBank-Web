@@ -15,6 +15,7 @@ import DatePicker from '../../components/DatePicker'
 import { Theme } from '../../components/Theme'
 
 type Props = { goal: Goal }
+  type EmojiPickerContainerProps = { isOpen: boolean; hasIcon: boolean }
 export function GoalManager(props: Props) {
   const dispatch = useAppDispatch()
 
@@ -132,15 +133,15 @@ const pickEmojiOnClick = (
         </Value>
       </Group>
       
-     <EmojiPickerContainer
+     
+    </GoalManagerContainer>
+    <EmojiPickerContainer
   isOpen={emojiPickerIsOpen}
   hasIcon={icon != null}
   onClick={(event) => event.stopPropagation()}
 >
   <EmojiPicker onClick={pickEmojiOnClick} />
 </EmojiPickerContainer>
-    </GoalManagerContainer>
-    
   
   )
 }
