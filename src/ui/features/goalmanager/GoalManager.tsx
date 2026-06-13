@@ -98,7 +98,7 @@ const pickEmojiOnClick = (
   dispatch(updateGoalRedux(updatedGoal))
 
   // TASK-3
-  // updateGoalApi(props.goal.id, updatedGoal)
+  updateGoalApi(props.goal.id, updatedGoal)
 }
   return (
     <GoalManagerContainer>
