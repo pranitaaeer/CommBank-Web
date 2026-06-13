@@ -21,7 +21,9 @@ export function GoalManager(props: Props) {
   const [name, setName] = useState<string | null>(null)
   const [targetDate, setTargetDate] = useState<Date | null>(null)
   const [targetAmount, setTargetAmount] = useState<number | null>(null)
-
+  
+  const [icon, setIcon] = useState<string | null>(null)
+  const [emojiPickerIsOpen, setEmojiPickerIsOpen] = useState(false)
   useEffect(() => {
     setName(props.goal.name)
     setTargetDate(props.goal.targetDate)
@@ -74,7 +76,25 @@ export function GoalManager(props: Props) {
       updateGoalApi(props.goal.id, updatedGoal)
     }
   }
+const pickEmojiOnClick = (
+  emoji: BaseEmoji,
+  event: React.MouseEvent
+) => {
+  event.stopPropagation()
 
+  setIcon(emoji.native)
+  setEmojiPickerIsOpen(false)
+
+  const updatedGoal: Goal = {
+    ...props.goal,
+    icon: emoji.native ?? props.goal.icon,
+    name: name ?? props.goal.name,
+    targetDate: targetDate ?? props.goal.targetDate,
+    targetAmount: targetAmount ?? props.goal.targetAmount,
+  }
+
+  dispatch(updateGoalRedux(updatedGoal))
+}
   return (
     <GoalManagerContainer>
       <NameInput value={name ?? ''} onChange={updateNameOnChange} />
