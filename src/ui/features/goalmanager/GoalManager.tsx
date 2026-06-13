@@ -1,3 +1,4 @@
+import EmojiPicker from '../../components/EmojiPicker'
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
 import { faDollarSign, IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
