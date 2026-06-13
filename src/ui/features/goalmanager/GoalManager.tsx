@@ -1,3 +1,4 @@
+import { BaseEmoji } from 'emoji-mart'
 import EmojiPicker from '../../components/EmojiPicker'
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
 import { faDollarSign, IconDefinition } from '@fortawesome/free-solid-svg-icons'
@@ -95,6 +96,9 @@ const pickEmojiOnClick = (
   }
 
   dispatch(updateGoalRedux(updatedGoal))
+
+  // TASK-3
+  // updateGoalApi(props.goal.id, updatedGoal)
 }
   return (
     <GoalManagerContainer>
@@ -127,7 +131,17 @@ const pickEmojiOnClick = (
           <StringValue>{new Date(props.goal.created).toLocaleDateString()}</StringValue>
         </Value>
       </Group>
+      
+     <EmojiPickerContainer
+  isOpen={emojiPickerIsOpen}
+  hasIcon={icon != null}
+  onClick={(event) => event.stopPropagation()}
+>
+  <EmojiPicker onClick={pickEmojiOnClick} />
+</EmojiPickerContainer>
     </GoalManagerContainer>
+    
+  
   )
 }
 
@@ -202,4 +216,10 @@ const StringInput = styled.input`
 
 const Value = styled.div`
   margin-left: 2rem;
+`
+const EmojiPickerContainer = styled.div<EmojiPickerContainerProps>`
+  display: ${(props) => (props.isOpen ? 'flex' : 'none')};
+  position: absolute;
+  top: ${(props) => (props.hasIcon ? '10rem' : '2rem')};
+  left: 0;
 `
