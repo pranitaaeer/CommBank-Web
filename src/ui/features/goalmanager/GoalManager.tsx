@@ -1,3 +1,4 @@
+
 import { BaseEmoji } from 'emoji-mart'
 import EmojiPicker from '../../components/EmojiPicker'
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
@@ -80,13 +81,15 @@ useEffect(() => {
     if (date != null) {
       setTargetDate(date)
       const updatedGoal: Goal = {
-        ...props.goal,
-        name: name ?? props.goal.name,
-        targetDate: date ?? props.goal.targetDate,
-        targetAmount: targetAmount ?? props.goal.targetAmount,
-      }
-      dispatch(updateGoalRedux(updatedGoal))
-      updateGoalApi(props.goal.id, updatedGoal)
+      ...props.goal,
+      icon: emoji.native ?? props.goal.icon,
+      name: name ?? props.goal.name,
+      targetDate: targetDate ?? props.goal.targetDate,
+      targetAmount: targetAmount ?? props.goal.targetAmount,
+    }
+
+    updateGoalApi(props.goal.id, updatedGoal)
+  
     }
   }
 const pickEmojiOnClick = (
